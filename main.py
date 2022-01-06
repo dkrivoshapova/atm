@@ -1,8 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk
-from itertools import *
-from random import randint
+
 
 temp = 0
 after_id = ''
@@ -38,22 +37,22 @@ def change_card():
     else:
         stop_tick()
         canvas.itemconfigure(card_id, image=card_images[0])
-        get_pasword()
+        get_password()
         temp = 0
 
 
-def get_pasword():
+def get_password():
     canvas.itemconfigure(screen_id, image=screen_images[3])
-    pasword_b.tkraise()
-    pasword.tkraise()
-    state_nuber_button(1)
+    password_b.tkraise()
+    password.tkraise()
+    state_number_button(1)
 
 
 def submit():
-    if pasword_b.var.get():
-        pasword.config(show='')
+    if password_b.var.get():
+        password.config(show='')
     else:
-        pasword.config(show='*')
+        password.config(show='*')
 
 
 def execute_telephone():
@@ -108,11 +107,11 @@ def add_cash():
         temp = 0
 
 
-def add_char_pasword(char):
-    value = pasword.get() + char
+def add_char_password(char):
+    value = password.get() + char
     if char.isdigit() and len(value) < 5:
-        pasword.delete(0, END)
-        pasword.insert(0, value)
+        password.delete(0, END)
+        password.insert(0, value)
     else:
         messagebox.showerror(title="Error", message="Недопустимый ввод")
 
@@ -127,10 +126,10 @@ def add_char_sum(char):
 
 
 def add_char_tel(char):
-    l = get_telephone.get() + char
-    if (char == '+' and len(l) == 1) or (char.isdigit() and len(l) > 1 and len(l) < 13):
+    tel = get_telephone.get() + char
+    if (char == '+' and len(tel) == 1) or (char.isdigit() and len(tel) > 1 and len(tel) < 13):
         get_telephone.delete(0, END)
-        get_telephone.insert(0, l)
+        get_telephone.insert(0, tel)
     else:
         messagebox.showerror(title="Error", message="Недопустимый ввод")
 
@@ -142,22 +141,22 @@ def card():
     change_card()
 
 
-def fun_char_pasword(char):
-    value = pasword.get()
+def fun_char_password(char):
+    value = password.get()
     if char == 'e' and len(value) == 4:
-        pasword.lower()
-        pasword_b.lower()
-        pasword.delete(0, END)
+        password.lower()
+        password_b.lower()
+        password.delete(0, END)
         # canvas.delete("password")
         canvas.itemconfigure(screen_id, image=screen_images[4])
         state_screen_button(1)
-        state_nuber_button(0)
+        state_number_button(0)
     elif char == 'a':
-        value = pasword.get()
-        pasword.delete(0, END)
-        pasword.insert(0, value[:-1])
+        value = password.get()
+        password.delete(0, END)
+        password.insert(0, value[:-1])
     elif char == 'd':
-        pasword.delete(0, END)
+        password.delete(0, END)
     else:
         messagebox.showerror(title="Error", message="Недопустимый ввод")
 
@@ -167,7 +166,7 @@ def fun_char_sum(char):
     if char == 'e' and val % 100 == 0 and val > 99 and val < 500001:
         b_s3.config(state=NORMAL)
         b_s6.config(state=NORMAL)
-        state_nuber_button(0)
+        state_number_button(0)
     elif char == 'a':
         val = get_sum.get()
         get_sum.delete(0, END)
@@ -179,8 +178,8 @@ def fun_char_sum(char):
 
 
 def fun_char_tel(char):
-    l = get_telephone.get()
-    if char == 'e' and len(l) == 12:
+    tel = get_telephone.get()
+    if char == 'e' and len(tel) == 12:
         button_get_sum()
     elif char == 'a':
         val = get_sum.get()
@@ -194,7 +193,7 @@ def fun_char_tel(char):
 
 def screen_button_menu(n):
     if n == 1:
-        withdrow()
+        withdraw()
     elif n == 2:
         balance()
     elif n == 3:
@@ -224,7 +223,7 @@ def state_screen_button(n):
         b_s6.config(state=DISABLED)
 
 
-def state_nuber_button(n):
+def state_number_button(n):
     if n == 1:
         b_n1.config(state=NORMAL)
         b_n2.config(state=NORMAL)
@@ -272,11 +271,11 @@ def deposit():
     b_s6.config(command=menu)
 
 
-def withdrow():
+def withdraw():
     canvas.itemconfigure(screen_id, image=screen_images[11])
     b_s1.config(command=change_cash)
     b_s2.config(command=change_cash)
-    b_s3.config(command=get_withdrow_sum)
+    b_s3.config(command=get_withdraw_sum)
     b_s4.config(command=change_cash)
     b_s5.config(command=change_cash)
     b_s6.config(command=menu)
@@ -308,7 +307,7 @@ def button_get_sum():
     b_s2.config(state=DISABLED)
     b_s4.config(state=DISABLED)
     b_s5.config(state=DISABLED)
-    state_nuber_button(1)
+    state_number_button(1)
 
 
 def button_get_telephone():
@@ -333,10 +332,10 @@ def button_get_telephone():
 
     b_s3.config(command=execute_telephone)
     b_s6.config(command=menu)
-    state_nuber_button(1)
+    state_number_button(1)
 
 
-def get_withdrow_sum():
+def get_withdraw_sum():
     b_s3.config(command=change_cash)
     canvas.itemconfigure(screen_id, image=screen_images[10])
     get_sum.lift()
@@ -347,7 +346,7 @@ def menu():
     canvas.itemconfigure(screen_id, image=screen_images[4])
     get_sum.lower()
     get_telephone.lower()
-    state_nuber_button(0)
+    state_number_button(0)
     state_screen_button(1)
     menu_bottom()
     get_telephone.delete(0, END)
@@ -371,7 +370,7 @@ def balance():
 def telephone():
     state_screen_button(0)
     canvas.itemconfigure(screen_id, image=screen_images[7])
-    state_nuber_button(1)
+    state_number_button(1)
     get_sum.tkraise()
     button_get_telephone()
     get_telephone.tkraise()
@@ -404,36 +403,35 @@ def start():
     start_b.tkraise()
     start_b.configure(state=NORMAL)
     state_screen_button(0)
-    state_nuber_button(0)
+    state_number_button(0)
     start_button()
 
 
 def start_button():
     menu_bottom()
 
-    b_n1.configure(command=lambda: add_char_pasword('1'))
-    b_n2.configure(command=lambda: add_char_pasword('2'))
-    b_n3.configure(command=lambda: add_char_pasword('3'))
-    b_n4.configure(command=lambda: add_char_pasword('4'))
-    b_n5.configure(command=lambda: add_char_pasword('5'))
-    b_n6.configure(command=lambda: add_char_pasword('6'))
-    b_n7.configure(command=lambda: add_char_pasword('7'))
-    b_n8.configure(command=lambda: add_char_pasword('8'))
-    b_n9.configure(command=lambda: add_char_pasword('9'))
+    b_n1.configure(command=lambda: add_char_password('1'))
+    b_n2.configure(command=lambda: add_char_password('2'))
+    b_n3.configure(command=lambda: add_char_password('3'))
+    b_n4.configure(command=lambda: add_char_password('4'))
+    b_n5.configure(command=lambda: add_char_password('5'))
+    b_n6.configure(command=lambda: add_char_password('6'))
+    b_n7.configure(command=lambda: add_char_password('7'))
+    b_n8.configure(command=lambda: add_char_password('8'))
+    b_n9.configure(command=lambda: add_char_password('9'))
 
-    b_minus.config(command=lambda: add_char_pasword('-'))
-    b_null.config(command=lambda: add_char_pasword('0'))
-    b_plus.config(command=lambda: add_char_pasword('+'))
+    b_minus.config(command=lambda: add_char_password('-'))
+    b_null.config(command=lambda: add_char_password('0'))
+    b_plus.config(command=lambda: add_char_password('+'))
 
-    b_cancel.config(command=lambda: fun_char_pasword('a'))
-    b_clear.config(command=lambda: fun_char_pasword('d'))
-    b_enter.config(command=lambda: fun_char_pasword('e'))
+    b_cancel.config(command=lambda: fun_char_password('a'))
+    b_clear.config(command=lambda: fun_char_password('d'))
+    b_enter.config(command=lambda: fun_char_password('e'))
 
 
 tk = Tk()
 tk.protocol("WM_DELETE_WINDOW", closing_app)
 tk.title("Банкомат")
-# tk.resizable(0,0)
 tk.wm_attributes("-topmost", 1)
 tk.iconbitmap("logo.ico")
 
@@ -466,87 +464,87 @@ img4_id = canvas.create_image(400, 630, image=image4)
 nfc = ImageTk.PhotoImage(file="nfc.png")
 nfc_id = canvas.create_image(920, 665, image=nfc)
 
-# add_buttom_1
+# add_button_1
 bottom_n1 = ImageTk.PhotoImage(file="n1.png")
-b_n1 = Button(tk, image=bottom_n1, highlightthickness=0, bd=0, command=lambda: add_char_pasword('1'))
+b_n1 = Button(tk, image=bottom_n1, highlightthickness=0, bd=0, command=lambda: add_char_password('1'))
 b_n1_id = canvas.create_window(250, 550, window=b_n1)
 
-# add_buttom_2
+# add_button_2
 bottom_n2 = ImageTk.PhotoImage(file="n2.png")
-b_n2 = Button(tk, image=bottom_n2, highlightthickness=0, bd=0, command=lambda: add_char_pasword('2'))
+b_n2 = Button(tk, image=bottom_n2, highlightthickness=0, bd=0, command=lambda: add_char_password('2'))
 b_n2_id = canvas.create_window(350, 550, window=b_n2)
 
-# add_buttom_3
+# add_button_3
 bottom_n3 = ImageTk.PhotoImage(file="n3.png")
-b_n3 = Button(tk, image=bottom_n3, highlightthickness=0, bd=0, command=lambda: add_char_pasword('3'))
+b_n3 = Button(tk, image=bottom_n3, highlightthickness=0, bd=0, command=lambda: add_char_password('3'))
 b_n3_id = canvas.create_window(450, 550, window=b_n3)
 
-# add_buttom_4
+# add_button_4
 bottom_n4 = ImageTk.PhotoImage(file="n4.png")
-b_n4 = Button(tk, image=bottom_n4, highlightthickness=0, bd=0, command=lambda: add_char_pasword('4'))
+b_n4 = Button(tk, image=bottom_n4, highlightthickness=0, bd=0, command=lambda: add_char_password('4'))
 b_n4_id = canvas.create_window(245, 600, window=b_n4)
 
-# add_buttom_5
+# add_button_5
 bottom_n5 = ImageTk.PhotoImage(file="n5.png")
-b_n5 = Button(tk, image=bottom_n5, highlightthickness=0, bd=0, command=lambda: add_char_pasword('5'))
+b_n5 = Button(tk, image=bottom_n5, highlightthickness=0, bd=0, command=lambda: add_char_password('5'))
 b_n5_id = canvas.create_window(350, 600, window=b_n5)
 
-# add_buttom_6
+# add_button_6
 bottom_n6 = ImageTk.PhotoImage(file="n6.png")
-b_n6 = Button(tk, image=bottom_n6, highlightthickness=0, bd=0, command=lambda: add_char_pasword('6'))
+b_n6 = Button(tk, image=bottom_n6, highlightthickness=0, bd=0, command=lambda: add_char_password('6'))
 b_n6_id = canvas.create_window(450, 600, window=b_n6)
 
-# add_buttom_7
+# add_button_7
 bottom_n7 = ImageTk.PhotoImage(file="n7.png")
-b_n7 = Button(tk, image=bottom_n7, highlightthickness=0, bd=0, command=lambda: add_char_pasword('7'))
+b_n7 = Button(tk, image=bottom_n7, highlightthickness=0, bd=0, command=lambda: add_char_password('7'))
 b_n7_id = canvas.create_window(240, 650, window=b_n7)
 
-# add_buttom_8
+# add_button_8
 bottom_n8 = ImageTk.PhotoImage(file="n8.png")
-b_n8 = Button(tk, image=bottom_n8, highlightthickness=0, bd=0, command=lambda: add_char_pasword('8'))
+b_n8 = Button(tk, image=bottom_n8, highlightthickness=0, bd=0, command=lambda: add_char_password('8'))
 b_n8_id = canvas.create_window(350, 650, window=b_n8)
 
-# add_buttom_9
+# add_button_9
 bottom_n9 = ImageTk.PhotoImage(file="n9.png")
-b_n9 = Button(tk, image=bottom_n9, highlightthickness=0, bd=0, command=lambda: add_char_pasword('9'))
+b_n9 = Button(tk, image=bottom_n9, highlightthickness=0, bd=0, command=lambda: add_char_password('9'))
 b_n9_id = canvas.create_window(450, 650, window=b_n9)
 
-# add_buttom_minus
+# add_button_minus
 bottom_minus = ImageTk.PhotoImage(file="minus.png")
-b_minus = Button(tk, image=bottom_minus, highlightthickness=0, bd=0, command=lambda: add_char_pasword('-'))
+b_minus = Button(tk, image=bottom_minus, highlightthickness=0, bd=0, command=lambda: add_char_password('-'))
 b_minus_id = canvas.create_window(235, 700, window=b_minus)
 
-# add_buttom_null
+# add_button_null
 bottom_null = ImageTk.PhotoImage(file="null.png")
-b_null = Button(tk, image=bottom_null, highlightthickness=0, bd=0, command=lambda: add_char_pasword('0'))
+b_null = Button(tk, image=bottom_null, highlightthickness=0, bd=0, command=lambda: add_char_password('0'))
 b_null_id = canvas.create_window(350, 700, window=b_null)
 
-# add_buttom_plus
+# add_button_plus
 bottom_plus = ImageTk.PhotoImage(file="plus.png")
-b_plus = Button(tk, image=bottom_plus, highlightthickness=0, bd=0, command=lambda: add_char_pasword('+'))
+b_plus = Button(tk, image=bottom_plus, highlightthickness=0, bd=0, command=lambda: add_char_password('+'))
 b_plus_id = canvas.create_window(450, 700, window=b_plus)
 
-# add_buttom_cancel
+# add_button_cancel
 bottom_cancel = ImageTk.PhotoImage(file="cancel.png")
-b_cancel = Button(tk, image=bottom_cancel, highlightthickness=0, bd=0, command=lambda: fun_char_pasword('a'))
+b_cancel = Button(tk, image=bottom_cancel, highlightthickness=0, bd=0, command=lambda: fun_char_password('a'))
 b_cancel_id = canvas.create_window(550, 550, window=b_cancel)
 
-# add_buttom_clear
+# add_button_clear
 bottom_clear = ImageTk.PhotoImage(file="clear.png")
-b_clear = Button(tk, image=bottom_clear, highlightthickness=0, bd=0, command=lambda: fun_char_pasword('d'))
+b_clear = Button(tk, image=bottom_clear, highlightthickness=0, bd=0, command=lambda: fun_char_password('d'))
 b_clear_id = canvas.create_window(555, 600, window=b_clear)
 
-# add_buttom_enter
+# add_button_enter
 bottom_enter = ImageTk.PhotoImage(file="enter.png")
-b_enter = Button(tk, image=bottom_enter, highlightthickness=0, bd=0, command=lambda: fun_char_pasword('e'))
+b_enter = Button(tk, image=bottom_enter, highlightthickness=0, bd=0, command=lambda: fun_char_password('e'))
 b_enter_id = canvas.create_window(560, 650, window=b_enter)
 
-# add_buttom_empty
+# add_button_empty
 bottom_empty = ImageTk.PhotoImage(file="empty.png")
 b_empty = Button(tk, image=bottom_empty, highlightthickness=0, bd=0)
 b_empty_id = canvas.create_window(565, 700, window=b_empty)
 
-# add_screen and buttoms
+# add_screen and buttons
 screen_frame = ImageTk.PhotoImage(file="screen_frame.png")
 screen_frame_id = canvas.create_image(404, 295, image=screen_frame)
 
@@ -565,28 +563,28 @@ screen_images.append(ImageTk.PhotoImage(file="select_sum.png"))  # 11
 
 screen_id = canvas.create_image(400, 295, image=screen_images[1])
 
-# add_buttom_s1
+# add_button_s1
 bottom_s1 = ImageTk.PhotoImage(file="screen_buttom.png")
 b_s1 = Button(tk, image=bottom_s1, highlightthickness=5, bd=0, command=lambda: screen_button_menu(1))
 b_s1_id = canvas.create_window(150, 200, window=b_s1)
 
-# add_buttom_s2
+# add_button_s2
 b_s2 = Button(tk, image=bottom_s1, highlightthickness=5, bd=0, command=lambda: screen_button_menu(2))
 b_s2_id = canvas.create_window(150, 300, window=b_s2)
 
-# add_buttom_s3
+# add_button_s3
 b_s3 = Button(tk, image=bottom_s1, highlightthickness=5, bd=0, command=lambda: screen_button_menu(3))
 b_s3_id = canvas.create_window(150, 400, window=b_s3)
 
-# add_buttom_s4
+# add_button_s4
 b_s4 = Button(tk, image=bottom_s1, highlightthickness=5, bd=0, command=lambda: screen_button_menu(4))
 b_s4_id = canvas.create_window(650, 200, window=b_s4)
 
-# add_buttom_5
+# add_button_5
 b_s5 = Button(tk, image=bottom_s1, highlightthickness=5, bd=0, command=lambda: screen_button_menu(5))
 b_s5_id = canvas.create_window(650, 300, window=b_s5)
 
-# add_buttom_6
+# add_button_6
 b_s6 = Button(tk, image=bottom_s1, highlightthickness=5, bd=0, command=lambda: screen_button_menu(6))
 b_s6_id = canvas.create_window(650, 400, window=b_s6)
 
@@ -619,9 +617,9 @@ cash_images.append(ImageTk.PhotoImage(file="cash6.png"))
 
 cash_id = canvas.create_image(900, 495, image=cash_images[0])
 
-pasword = Entry(tk, background='grey', highlightthickness=0, show='*')
-pasword.lower()
-canvas.create_window(400, 300, window=pasword, tags='pasword_id')
+password = Entry(tk, background='grey', highlightthickness=0, show='*')
+password.lower()
+canvas.create_window(400, 300, window=password, tags='pasword_id')
 
 get_sum = Entry(tk, background='grey', highlightthickness=0)
 get_sum.lower()
@@ -631,17 +629,17 @@ get_telephone = Entry(tk, background='grey', highlightthickness=0)
 get_telephone.lower()
 get_telephone_id = canvas.create_window(510, 205, window=get_telephone)
 
-pasword_b = Checkbutton(tk, text="Показать пароль", highlightthickness=0, background='grey', command=submit,
-                        onvalue=True, offvalue=False)
-pasword_b.lower()
-pasword_b.var = BooleanVar(value=False)
-pasword_b.configure(variable=pasword_b.var)
-canvas.create_window(400, 350, window=pasword_b, tags='password')
+password_b = Checkbutton(tk, text="Показать пароль", highlightthickness=0, background='grey', command=submit,
+                         onvalue=True, offvalue=False)
+password_b.lower()
+password_b.var = BooleanVar(value=False)
+password_b.configure(variable=password_b.var)
+canvas.create_window(400, 350, window=password_b, tags='password')
 
-start_buttom = ImageTk.PhotoImage(file="start_card.png")
-start_b = Button(tk, image=start_buttom, bd=0, highlightthickness=0, command=card)
+start_button_b = ImageTk.PhotoImage(file="start_card.png")
+start_b = Button(tk, image=start_button_b, bd=0, highlightthickness=0, command=card)
 start_b_id = canvas.create_window(300, 300, window=start_b, tags="start_b_id")
-state_nuber_button(0)
+state_number_button(0)
 
 tick()
 
